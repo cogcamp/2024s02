@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work05</title>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.50.0/dist/phaser.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+</style>
+<script>
+var mainScene = new Phaser.Scene('MainScene');
+
+mainScene.preload = function() {
+    // スプライト画像の読み込み
+    this.load.spritesheet('stars', './../assets/images/stars.png',{
+        frameWidth : 190,
+        frameHeight : 190,
+    });
+    
+    // スプライト画像の読み込み
+    this.load.spritesheet('heart', './../assets/images/heart.png',{
+        frameWidth : 150,
+        frameHeight : 150,
+    });
+};
+
+mainScene.create = function() {
+    // スターのパーティクル作成
+    this.createParticle1();
+    // ハートのパーティクル作成
+    this.createParticle2();
+};
+
+mainScene.createParticle1 = function() {
+    // 画面幅
+    var width = this.game.config.width;
+    // 画面高さ
+    var height = this.game.config.height;
+
+    // エミッターの領域は全画面
+    var emitZone = new Phaser.Geom.Rectangle(0, 0, width, height);
+    
+    // パーティクル作成
+    var particles = this.add.particles('stars');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        frame : [0, 1, 2, 3, 4, 5, 6, 7],
+        emitZone: { source: emitZone },
+        speed: { min: -20, max: 20 },
+        scale: { min: 0.2, max: 0.5 },
+        rotate: { min: 0,  max: 360},
+        alpha: { start: 1, end: 0 },
+        frequency : 100,
+        lifespan: 2000,
+        blendMode: 'COLOR',
+    });
+};
+
+mainScene.createParticle2 = function() {
+    // 画面幅
+    var width = this.game.config.width;
+    // 画面高さ
+    var height = this.game.config.height;
+
+    // エミッターの領域は全画面
+    var emitZone = new Phaser.Geom.Rectangle(0, 0, width, height);
+    
+    // パーティクル作成
+    var particles = this.add.particles('heart');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        frame : [0, 1, 2, 3, 4, 5, 6, 7],
+        emitZone: { source: emitZone },
+        speed: { min: -20, max: 20 },
+        scale: { min: 0.2, max: 0.5 },
+        alpha: { start: 1, end: 0 },
+        frequency : 100,
+        lifespan: 2000,
+        blendMode: 'COLOR',
+    });
+};
+
+
+var config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: '#0000CD',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
+    scene: [mainScene],
+};
+
+var game = new Phaser.Game(config);
+
+window.addEventListener("resize", (event) => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+},false);
+</script>
+</head>
+<body>
+</body>
+</html>

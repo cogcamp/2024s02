@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work04</title>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.50.0/dist/phaser.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+</style>
+<script>
+var mainScene = new Phaser.Scene('MainScene');
+
+mainScene.preload = function() {
+    // スプライト画像の読み込み
+    this.load.spritesheet('flares', './../assets/images/flares.png',{
+        frameWidth : 128,
+        frameHeight : 128,
+    });
+};
+
+mainScene.create = function() {
+    // パーティクル作成
+    this.createParticle();
+};
+
+mainScene.createParticle = function() {
+    // 画面幅
+    var width = this.game.config.width;
+    // 画面高さ
+    var height = this.game.config.height;
+
+    // エミッターの領域は全画面
+    var emitZone = new Phaser.Geom.Rectangle(0, 0, width, height);
+    
+    // パーティクル作成
+    var particles = this.add.particles('flares');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        frame : [0, 1, 2, 3, 4, 5],
+        emitZone: { source: emitZone },
+        speed: { min: -20, max: 20 },
+        scale: { min: 0.5, max: 0.8 },
+        alpha: { start: 1, end: 0 },
+        frequency : 50,
+        lifespan: 3000,
+        blendMode: 'COLOR',
+    });
+};
+
+var config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: '#000000',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
+    scene: [mainScene],
+};
+
+var game = new Phaser.Game(config);
+
+window.addEventListener("resize", (event) => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+},false);
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>wokr07</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    background-color: #FFFFCC;
+}
+.item {
+    position:absolute;
+    background-size: 100% 100%;
+}
+#container {
+    width:100%;
+    height:100%;
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+// アニメーションの関数
+function animation( element ) {
+    TweenMax.to(element,getRandomNumber(6,15),{
+        y:height+100,
+        ease:Linear.easeNone,
+        repeat:-1,
+        delay:-15
+    });
+    TweenMax.to(element,getRandomNumber(4,8),{
+        x:'+=100',
+        rotationZ:getRandomNumber(0,180),
+        repeat:-1,
+        yoyo:true,
+        ease:Sine.easeInOut
+    });
+    TweenMax.to(element,getRandomNumber(2,8),{
+        rotationX:getRandomNumber(0,360),
+        rotationY:getRandomNumber(0,360),
+        repeat:-1,
+        yoyo:true,
+        ease:Sine.easeInOut,
+        delay:-5,
+    });
+}
+
+// 乱数を作成する関数
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+var total = 30;
+var container = document.getElementById("container");
+
+for ( var i = 0; i < total; i++ ) {
+    var divTag = document.createElement('div');
+    TweenLite.set(divTag,{
+        attr : {class : 'item'},
+        x : getRandomNumber(0, width),
+        y : getRandomNumber(-200, -150),
+        z : getRandomNumber(-200, 200),
+    });
+    var image = getRandomNumber(1, 8);
+    divTag.style.backgroundImage = 'url(./../assets/images/heart' + image + '.png)';
+    
+    var w = getRandomNumber(20, 100);
+    var h = getRandomNumber(20, 100);
+    divTag.style.width = w + 'px';
+    divTag.style.height = h + 'px';
+    animation(divTag);
+    container.appendChild(divTag);
+}
+</script>
+</body>
+</html>

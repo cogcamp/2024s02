@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work06</title>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.50.0/dist/phaser.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+</style>
+<script>
+var mainScene = new Phaser.Scene('MainScene');
+
+mainScene.preload = function() {
+    // スプライト画像の読み込み
+    this.load.spritesheet('stars', './../assets/images/stars.png',{
+        frameWidth : 190,
+        frameHeight : 190,
+    });
+};
+
+mainScene.create = function() {
+    // パーティクル作成
+    this.createParticleLeft();
+    this.createParticleRight();
+};
+
+mainScene.createParticleLeft = function() {
+    // X座標
+    var x = 0;
+    // Y座標
+    var y = this.game.config.height / 4 * 3;
+    
+    // パーティクル作成
+    var particles = this.add.particles('stars');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        x : x,
+        y : y,
+        frame : [0, 1, 2, 3, 4, 5, 6, 7],
+        speed: { min: 300, max: 500 },
+        scale: { min: 0.2, max: 0.5 },
+        rotate: { min: 0,  max: 360},
+        alpha: { start: 1, end: 0 },
+        angle: { min: -45, max: -75 },
+        frequency : 50,
+        lifespan: 4000,
+        gravityY : 100,
+        blendMode: 'COLOR',
+    });
+};
+
+mainScene.createParticleRight = function() {
+    // X座標
+    var x = this.game.config.width;
+    // Y座標
+    var y = this.game.config.height / 4 * 3;
+    
+    // パーティクル作成
+    var particles = this.add.particles('stars');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        x : x,
+        y : y,
+        frame : [0, 1, 2, 3, 4, 5, 6, 7],
+        speed: { min: 300, max: 500 },
+        scale: { min: 0.2, max: 0.5 },
+        rotate: { min: 0,  max: 360},
+        alpha: { start: 1, end: 0 },
+        angle: { min: 225, max: 255 },
+        frequency : 50,
+        lifespan: 4000,
+        gravityY : 100,
+        blendMode: 'COLOR',
+    });
+};
+
+var config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: '#FFBBFF',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
+    scene: [mainScene],
+};
+
+var game = new Phaser.Game(config);
+
+window.addEventListener("resize", (event) => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+},false);
+</script>
+</head>
+<body>
+</body>
+</html>
