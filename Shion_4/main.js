@@ -30,7 +30,7 @@ mainScene.create = function() {
     this.createBlocks();
     
     // ライフのテキスト表示
-    this.lifeText = this.add.text(30, 460, 'ライフ：' + this.life + '頑張って！', {
+    this.lifeText = this.add.text(30, 460, 'ライフ：' + this.life, {
         font: '20px Open Sans',
         fill: '#ff0000'
     });
@@ -94,7 +94,7 @@ mainScene.createBall = function() {
 mainScene.createPaddle = function() {
      // パドル作成
     this.paddle = this.physics.add.image(400, 550, 'paddle1');
-    this.paddle.setDisplaySize(90,15);
+    this.paddle.setDisplaySize(100,15);
     this.paddle.setImmovable();
     this.paddle.isStart = true;
     this.physics.add.collider(this.paddle, this.ball, this.hitPaddle, null, this);
