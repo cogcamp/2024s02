@@ -30,7 +30,7 @@ mainScene.create = function() {
     this.createBlocks();
     
     // ライフのテキスト表示
-    this.lifeText = this.add.text(30, 460, 'ライフ：' + this.life + '頑張って！', {
+    this.lifeText = this.add.text(30, 460, 'ライフ：' + this.life, {
         font: '20px Open Sans',
         fill: '#ff0000'
     });
