@@ -73,7 +73,7 @@ mainScene.config = function() {
     this.cameras.main.setBackgroundColor('#cccccc');
     
     // パドルの移動速度
-    this.paddleSpeed = 11;
+    this.paddleSpeed = 17;
     
     // ボール発射の加速度
     this.ballSpeedX = 0;
