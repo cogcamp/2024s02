@@ -40,18 +40,6 @@ mainScene.create = function() {
         font: '20px Open Sans',
         fill: '#ff0000'
     });
-    //応援テキスト
-    if(this.blocks.countActive() > 162) {
-        this.CHEER = '頑張って！';
-    } else if(this.blocks.countActive() > 81) {
-        this.CHEER = '大丈夫！';
-    } else {
-        this.CHEER = 'あと少し〜';
-    }
-    this.cheerText =this.add.text(150, 460, '' + this.CHEER, {
-        font: '20px Open Sans',
-        fill: '#ff0000'
-    });
 };
 
 mainScene.update = function() {
@@ -92,7 +80,7 @@ mainScene.config = function() {
     this.ballSpeedY = -300;
     
     // ライフ
-    this.life = 15;
+    this.life = 10;
 };
 
 mainScene.createBall = function() {
