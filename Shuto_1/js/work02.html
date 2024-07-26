@@ -19,7 +19,7 @@ var mainScene = new Phaser.Scene('MainScene');
 
 mainScene.preload = function() {
     // スプライト画像の読み込み
-    this.load.spritesheet('heart', './../assets/images/heart.png',{
+    this.load.spritesheet('leaf', './../assets/images/heart.png',{
         frameWidth : 150,
         frameHeight : 150,
     });
@@ -27,15 +27,32 @@ mainScene.preload = function() {
 
 mainScene.create = function() {
     // 左側のパーティクル作成
-    
+    this.createParticle1();
     // 右側のパーティクル作成
-    
+    this.createParticle2();
 };
 
 mainScene.createParticle1 = function() {
     // 左側のパーティクル作成
-    
-    
+    var x=this.game.config.width /3;
+    //y座標は画面下部
+    var y=this.game.config.height;
+    //パーティクル作成
+    var particle =this.add.particles("leaf");
+    //エミッター起動
+    var emitter = particle.createEmitter({
+        x: y,
+        y: y,
+        frame : [0, 1, 2, 3],
+        speed: {min: 200, max: 500},
+        scale: {min: 0.3, max: 0.6},
+        angle: {min: -60, max: -120},
+        rotate: {min: 0, max: 360},
+        gravityY : 50,
+        frequency : 50,
+        lifespan: 4000,
+        blendMode: "COLOR",
+    });
     
 };
 
@@ -47,7 +64,7 @@ mainScene.createParticle2 = function() {
     var y = this.game.config.height;
     
     // パーティクル作成
-    var particles = this.add.particles('heart');
+    var particles = this.add.particles('leaf');
     // エミッター起動
     var emitter = particles.createEmitter({
         x: x,
@@ -58,7 +75,7 @@ mainScene.createParticle2 = function() {
         angle: { min: -60, max: -120 },
         rotate: { min: 0,  max: 360},
         gravityY : 50,
-        frequency : 50,
+        frequency : 10,
         lifespan: 4000,
         blendMode: 'COLOR',
     });
