@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work01</title>
+<script src="https://pixijs.download/v6.4.0/pixi.min.js"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+<script>
+// 花火の配列
+var fireworks = [];
+// 画像の配列
+var images = [];
+
+// 花火のクラス
+class Firework {
+    constructor() {
+        const index = getRandomNumber(0, images.length - 1);
+        this.sprite = new PIXI.Sprite(images[index]);
+        this.sprite.scale.x = 1;
+        this.sprite.scale.y = 1;
+        this.velocity = {x: 0, y: 0};
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+        this.fade = false;
+    }
+    
+    init() {
+        var x = getRandomNumber(10, this.screenWidth - 10);
+        var y = this.screenHeight - 50;
+        this.setPosition({x, y});
+        x = 0;
+        y = getRandomNumber(-5, -4);
+        this.setVelocity({x, y});
+        this.toExplode = true;
+        this.explodeHeight = getRandomNumber(0, this.screenHeight / 2);
+    }
+
+    setPosition(position) {
+        this.sprite.position.x = position.x;
+        this.sprite.position.y = position.y;
+    }
+  
+    setVelocity(velocity) {
+        this.velocity = velocity;
+    }
+    
+    update() {
+        this.sprite.position.x += this.velocity.x;
+        this.sprite.position.y += this.velocity.y;
+        // もしも到達点に達したら
+        if (this.toExplode && !this.exploded) {
+            // 爆発
+            if (this.sprite.position.y < this.explodeHeight ) {
+                this.sprite.alpha = 0;
+                this.exploded = true;
+                this.explode(this.sprite.position);
+            }
+        }
+        
+        if (this.fade) {
+            this.sprite.alpha -= 0.01;
+        }
+    }
+    
+    explode (position) {
+        var number = 10;
+        var velocity = 3;
+        for (var i = 1; i <= number; i++) {
+            // 飛び散る方向の座標を計算
+            var angle = (i * (360 / number)) / 360;
+            var x = Math.cos(2 * Math.PI * angle) * velocity;
+            var y = Math.sin(2 * Math.PI * angle) * velocity;
+            // 花火の追加
+            var miniFire = new Firework();
+            miniFire.setPosition(position);
+            miniFire.setVelocity({x, y});
+            miniFire.fade = true;
+            container.addChild(miniFire.sprite);
+            fireworks.push(miniFire);
+        }
+    }
+}
+
+// 画像読み込み
+for( var i = 0; i < 9; i++) {
+    images.push(PIXI.Texture.from(`./../assets/images/particle${i}.png`));
+}
+
+// PixiJSアプリ作成
+var app = new PIXI.Application({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: 0x330066,
+});
+document.body.appendChild(app.view);
+
+// コンテナ作成
+var container = new PIXI.Container();
+// アプリにコンテナ追加
+app.stage.addChild(container);
+
+// 花火を作成する
+for( var i = 0; i < 10; i++ ) {
+    var firework = new Firework();
+    firework.init();
+    container.addChild(firework.sprite);
+    fireworks.push(firework);
+}
+
+// アニメーション開始
+app.ticker.add(function() {
+  for (var i = 0, l = fireworks.length; i < l; i++) {
+    fireworks[i].update();  
+  }
+});
+
+// 乱数を作成する関数
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+</script>
+</body>
+</html>

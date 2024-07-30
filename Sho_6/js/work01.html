@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work01</title>
+<script src="https://pixijs.download/v6.4.0/pixi.min.js"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+<script>
+// 花火の配列
+var fireworks = [];
+// 画像の配列
+var images = [];
+
+// 花火のクラス
+class Firework {
+    constructor() {
+        const index = getRandomNumber(0, images.length - 1);
+        this.sprite = new PIXI.Sprite(images[index]);
+        this.sprite.scale.x = 1;
+        this.sprite.scale.y = 1;
+        this.velocity = {x: 0, y: 0};
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+        this.fade = false;
+    }
+    
+    init() {
+        // 初期設定
+        
+        
+        
+    }
+
+    setPosition(position) {
+        // 座標の設定
+        
+        
+        
+    }
+  
+    setVelocity(velocity) {
+        // 加速の設定
+        
+        
+        
+    }
+    
+    update() {
+        // 更新処理
+        
+        
+        
+    }
+    
+    explode (position) {
+        // 爆発の処理
+        
+        
+        
+    }
+}
+
+// 画像読み込み
+for( var i = 0; i < 9; i++) {
+    images.push(PIXI.Texture.from(`./../assets/images/particle${i}.png`));
+}
+
+// PixiJSアプリ作成
+var app = new PIXI.Application({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: 0x330066,
+});
+document.body.appendChild(app.view);
+
+// コンテナ作成
+var container = new PIXI.Container();
+// アプリにコンテナ追加
+app.stage.addChild(container);
+
+// 花火を作成する
+
+
+
+// アニメーション開始
+app.ticker.add(function() {
+    
+    
+    
+});
+
+// 乱数を作成する関数
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+</script>
+</body>
+</html>

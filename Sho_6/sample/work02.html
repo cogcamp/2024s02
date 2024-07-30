@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>work02</title>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.50.0/dist/phaser.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+</style>
+<script>
+var mainScene = new Phaser.Scene('MainScene');
+
+mainScene.preload = function() {
+    // スプライト画像の読み込み
+    this.load.spritesheet('heart', './../assets/images/heart.png',{
+        frameWidth : 150,
+        frameHeight : 150,
+    });
+};
+
+mainScene.create = function() {
+    // 左側のパーティクル作成
+    this.createParticle1();
+    // 右側のパーティクル作成
+    this.createParticle2();
+};
+
+mainScene.createParticle1 = function() {
+    // X座標は画面の1/3の位置
+    var x = this.game.config.width / 3;
+    // Y座標は画面下部
+    var y = this.game.config.height;
+    
+    // パーティクル作成
+    var particles = this.add.particles('heart');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        x: x,
+        y: y,
+        frame : [0, 1, 2, 3],
+        speed: { min: 200, max: 500 },
+        scale: { min: 0.3, max: 0.6 },
+        angle: { min: -60, max: -120 },
+        rotate: { min: 0,  max: 360},
+        gravityY : 50,
+        frequency : 50,
+        lifespan: 4000,
+        blendMode: 'COLOR',
+    });
+};
+
+mainScene.createParticle2 = function() {
+    // X座標は画面の2/3の位置
+    var x = this.game.config.width / 3 * 2;
+    // Y座標は画面下部
+    var y = this.game.config.height;
+    
+    // パーティクル作成
+    var particles = this.add.particles('heart');
+    // エミッター起動
+    var emitter = particles.createEmitter({
+        x: x,
+        y: y,
+        frame : [4, 5, 6, 7],
+        speed: { min: 200, max: 500 },
+        scale: { min: 0.3, max: 0.6 },
+        angle: { min: -60, max: -120 },
+        rotate: { min: 0,  max: 360},
+        gravityY : 50,
+        frequency : 50,
+        lifespan: 4000,
+        blendMode: 'COLOR',
+    });
+};
+
+var config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    backgroundColor: '#333333',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
+    scene: [mainScene],
+};
+
+var game = new Phaser.Game(config);
+
+window.addEventListener("resize", (event) => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+},false);
+</script>
+</head>
+<body>
+</body>
+</html>
