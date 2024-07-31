@@ -6,6 +6,7 @@ loadScene.preload = function() {
     this.load.image('gamestart', 'assets/images/gamestart.gif');
     // ゲームオーバー画像
     this.load.image('gameover', 'assets/images/gameover.png');
+    this.load.image('gameclear', 'assets/images/gameclear.png');
     // マップデータ
     this.load.tilemapTiledJSON('map', 'assets/data/map1.json');
     // マップ画像
