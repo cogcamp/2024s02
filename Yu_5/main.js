@@ -179,7 +179,7 @@ mainScene.collectCoin = function(sprite, tile) {
     this.coinLayer.removeTileAt(tile.x,tile.y);
     //スコアを1加算
     this.score++;
-    if(this.score==5){
+    if(this.score==30){
         this.gameClearTimer=this.time.addEvent({
         delay:1000,
         callback:this.gameClear,
